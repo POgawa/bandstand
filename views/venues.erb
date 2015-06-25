@@ -1,0 +1,27 @@
+<section>
+  <h2>All Venues</h2>
+  <% if @venues.any?() %>
+    <ul>
+      <% @venues.each() do |venue| %>
+        <li><a href="/venues/<%= venue.id() %>"><%= venue.name() %></a>
+          <form class="band-list" action="/venues/<%= venue.id() %>" method="post">
+            <input type="hidden" name="_method" value="delete">
+            <button type="submit" class="btn-remove"><i class="fa fa-times"></i></button>
+          </form>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    I don't know about any venues. Add one below!
+  <% end %>
+</section>
+
+<section>
+  <h3>Add new venue:</h3>
+  <form action="/venues" method="post">
+    <div class="form-group">
+      <input class="form-control input_new_name" id="name" type="text" name="name">
+    </div>
+    <button type="submit" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-plus"></span>&nbsp; Add Venue</button>
+  </form>
+</section>
