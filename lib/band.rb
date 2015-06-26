@@ -5,9 +5,9 @@ class Band < ActiveRecord::Base
   before_save :capitalize_band_name
 
 
-  def add_venues |venue_ids|
+  def add_venues venue_ids
     venue_ids.each do |venue_id|
-      self.venues << Venue.find venue_id.to_i
+      self.venues << Venue.find(venue_id.to_i)
     end
   end
 
