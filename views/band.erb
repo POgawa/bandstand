@@ -1,0 +1,57 @@
+<h2><%= @band.name %></h2>
+
+<section>
+  <% if @band.venues.any? %>
+    <h3>Venues played by this band:</h3>
+    <ul>
+    <% @band.venues.each do |venue| %>
+      <li>
+      <form class="band-list" action="/venues/<%= venue.id %>" method="post">
+        <input type="hidden" name="_method" value="patch">
+        <input type="hidden" name="band_id" value="<%= @band.id %>">
+        <button type="submit" class="btn-remove"><i class="fa fa-minus-circle"></i></button>
+      </form>
+      <a href="/venues/<%= venue.id %>"><%= venue.name %></a>
+      </li>
+    <% end %>
+    </ul>
+  <% else %>
+    Band has not played yet.
+  <% end %>
+</section>
+
+<section>
+  <% if @band.venues != @venues %>
+    <h3>Add venues for this band:</h3>
+    <form class="padding-bottom" action="/bands/<%= @band.id %>" method="post">
+      <input type="hidden" name="_method" value="patch">
+      <% @venues.each do |venue| %>
+        <% if ! @band.venues.include?(venue) %>
+          <div class="checkbox">
+            <label><input type="checkbox" name="venue_ids[]" value="<%= venue.id %>"><%= venue.name %></label><br>
+          </div>
+        <% end %>
+      <% end %>
+      <button type="submit" class="btn btn-sm btn-info">Add Venue</button>
+    </form>
+  <% end %>
+</section>
+
+<section>
+  <h3>Edit band name:</h3>
+  <form action="/bands/<%= @band.id %>" method="post">
+    <input type="hidden" name="_method" value="patch">
+    <div class="input-append">
+      <input class="form-control input_change_band_name" id="name" type="text" name="name" value="<%= @band.name %>">
+      <button type="submit" class="btn btn-sm btn-info"> Change name</button>
+    </div>
+
+  </form>
+</section>
+
+<section id="delete_band">
+  <form action="/bands/<%= @band.id %>" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <button type="submit" class="btn btn-sm btn-danger">Delete Band</button>
+  </form>
+</section>
